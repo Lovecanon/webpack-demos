@@ -6,14 +6,43 @@
     <script src="./build/react.development.js"></script>
     <script src="./build/react-dom.development.js"></script>
     <script src="./build/babel.min.js"></script>
+    <script src="./build/react.js"></script>
 </head>
 
 <body>
     <div id="example"></div>
     <script type="text/babel">
-        // ** Our code goes here! **
+        var Hello = React.createClass({
+            getInitialState: function () {
+                return {
+                    opacity: 1.0
+                };
+            },
+
+            componentDidMount: function () {
+                this.timer = setInterval(function () {
+                    var opacity = this.state.opacity;
+                    opacity -= .05;
+                    if (opacity < 0.1) {
+                        opacity = 1.0;
+                    }
+                    this.setState({
+                        opacity: opacity
+                    });
+                }.bind(this), 100);
+            },
+
+            render: function () {
+                return (
+                    <div style={{ opacity: this.state.opacity }}>
+                        Hello {this.props.name}
+                    </div>
+                );
+            }
+        });
+
         ReactDOM.render(
-            <h1>Hello, world!</h1>,
+            <Hello name="world" />,
             document.getElementById('example')
         );
     </script>
